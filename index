@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fideicomiso Poderoso | Recuperemos al DIM</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* 1. VARIABLES Y RESET */
+        :root {
+            --dim-red: #E30613;
+            --dim-blue: #002855;
+            --white: #ffffff;
+            --overlay: rgba(0, 40, 85, 0.85); /* Azul con transparencia para el fondo */
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--dim-blue); color: var(--white); overflow-x: hidden; }
+
+        /* 2. FONDO PRINCIPAL (ESTADIO) */
+        .background-fixed {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Atanasio_Girardot_Stadium.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -2;
+        }
+
+        .dark-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--overlay) 0%, rgba(227, 6, 19, 0.4) 100%);
+            z-index: -1;
+        }
+
+        /* 3. NAVEGACIÓN Y LOGO */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { width: 60px; height: auto; }
+
+        /* 4. SECCIÓN HERO (TÍTULO Y EXPLICACIÓN) */
+        header {
+            text-align: center;
+            padding: 80px 5%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 { font-size: 3.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 20px; line-height: 1; }
+        h1 span { color: var(--dim-red); }
+
+        .btn-explicacion {
+            padding: 15px 30px;
+            background-color: var(--dim-red);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-explicacion:hover { transform: scale(1.05); background-color: #b3000b; }
+
+        /* 5. SECCIÓN VIDEO */
+        .video-section {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            background: #000;
+            border: 4px solid var(--dim-red);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        /* 6. EL CORE: IFRAME APP SCRIPT */
+        .app-section {
+            padding: 60px 5%;
+            background: rgba(255,255,255,0.05);
+            margin: 40px 0;
+        }
+
+        .iframe-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            height: 700px; /* Ajusta según el tamaño de tu app */
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 7. FORMULARIO DE CONTACTO (PLACEHOLDER) */
+        .contact-section {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-section h2 { margin-bottom: 20px; text-align: center; }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+            font-family: inherit;
+        }
+
+        /* 8. FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #000;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .iframe-wrapper { height: 650px; }
+        }
+
+        /* MODAL EXPLICATIVO (Opcional) */
+        #modalExplicacion {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: var(--white);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 25px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondos -->
+    <div class="background-fixed"></div>
+    <div class="dark-overlay"></div>
+
+    <!-- Navegación -->
+    <nav>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Escudo_del_Deportivo_Independiente_Medell%C3%ADn.png" alt="Escudo DIM" class="logo">
+        <div><strong>FIDEICOMISO PODEROSO</strong></div>
+    </nav>
+
+    <!-- Hero -->
+    <header>
+        <h1>EL EQUIPO DEL PUEBLO <span>ES DEL PUEBLO</span></h1>
+        <p style="margin-bottom: 30px; font-size: 1.2rem;">Únete a la primera iniciativa de propiedad colectiva en el fútbol colombiano.</p>
+        <button class="btn-explicacion" onclick="toggleModal(true)">¿De qué se trata esto?</button>
+    </header>
+
+    <!-- Sección de Video -->
+    <section class="video-section">
+        <div class="video-container">
+            <!-- Reemplaza 'tu-video.mp4' por la ruta real de tu video en el repo de GitHub -->
+            <video controls poster="https://via.placeholder.com/800x450/002855/ffffff?text=Video+Fideicomiso+DIM">
+                <source src="tu-video.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+        </div>
+    </section>
+
+    <!-- Sección de la App (Tu App Script) -->
+    <section class="app-section">
+        <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">TABLERO DE INVERSIÓN</h2>
+        <div class="iframe-wrapper">
+            <!-- TU APP SCRIPT INCRUSTADA -->
+            <iframe src="https://script.google.com/macros/s/AKfycbwY_VIFQa10UHrpRmMgd99_LqwwS7okRTSmGU6WrZH7IUxpDEr9-msfF-a86rAfOVX1Ew/exec"></iframe>
+        </div>
+    </section>
+
+    <!-- Formulario de Contacto -->
+    <section class="contact-section">
+        <h2>¿Tienes dudas? Escríbenos</h2>
+        <form class="form-group">
+            <input type="text" placeholder="Nombre completo" required>
+            <input type="email" placeholder="Correo electrónico" required>
+            <textarea rows="4" placeholder="Tu mensaje o duda"></textarea>
+            <button type="button" class="btn-explicacion" style="width: 100%;">Enviar Mensaje</button>
+        </form>
+    </section>
+
+    <!-- Modal de Explicación -->
+    <div id="modalExplicacion">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal(false)">&times;</span>
+            <h2 style="color: var(--dim-red)">Nuestra Propuesta</h2>
+            <br>
+            <p>Buscamos democratizar la propiedad del <strong>Deportivo Independiente Medellín</strong>. A través de un modelo de propiedad participativa, cada hincha podrá ser accionista del club de sus amores.</p>
+            <br>
+            <ul>
+                <li>✓ Transparencia legal mediante fiduciaria.</li>
+                <li>✓ Toma de decisiones democrática.</li>
+                <li>✓ Reinversión social y deportiva.</li>
+            </ul>
+            <br>
+            <p><strong>El DIM no es una empresa, es un sentimiento colectivo.</strong></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Fideicomiso Poderoso. Todos los derechos reservados.</p>
+        <p style="font-size: 0.7rem; margin-top: 10px;">Esta es una iniciativa independiente de la hinchada. No oficial vinculada a El Equipo del Pueblo S.A. hasta la fase de oferta.</p>
+    </footer>
+
+    <script>
+        function toggleModal(show) {
+            document.getElementById('modalExplicacion').style.display = show ? 'flex' : 'none';
+        }
+    </script>
+
+</body>
+</html>
